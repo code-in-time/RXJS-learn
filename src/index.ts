@@ -1,29 +1,33 @@
 import { Observable } from 'rxjs';
-// Observable lifecycle
-const someObservable$ = new Observable<string>(subscriber => {
-  console.log('run')
-  subscriber.next('Alice');
-  subscriber.next('Ben')
-  setTimeout(() => {
-    subscriber.next('Charlie');
-    // subscriber.complete();
-    subscriber.error(new Error('vvvvvvvvvvvvvv'));
-  }, 2000);
 
-  return () => {
-    // cleanup
-    // Called after complete and error
-    console.log('tear down')
-  };
+const obser$ = new Observable<string>(sub => {
+  let count = 0;
+
+  const intervalId = setInterval(() => {
+    console.log('timer')
+    // if (count === 4) {
+    //   sub.complete();
+    // }
+    sub.next(`count ${count}`);
+    count ++
+
+  },1000);
+
+  return () => { 
+  // Teardown when subscription ends
+    console.log('teardown');
+    clearInterval(intervalId);
+  }
+})
+
+
+const sub = obser$.subscribe({
+  next: (x) => console.log('next', x),
+  complete: () => console.log('completed'),
+  error: (x) =>  console.log('error', x)
 });
 
-console.log('before')
-const t = someObservable$.subscribe(
-  {
-    next: value => console.log('next: ', value),
-    complete: () => console.log('complete'),
-    error: (x) => console.log('error', x)
-  }
-);
-
-console.log('after')
+// Unsubscribe after 3 seconds
+setTimeout(() => {
+  sub.unsubscribe();
+}, 3000);
