@@ -1,0 +1,34 @@
+import { Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+
+const btn = document.querySelector('#clickBtn');
+
+const btnClick$ = new Observable<MouseEvent>(sub => {
+  btn.addEventListener('click', (e: MouseEvent) => {
+    sub.next(e);
+  });
+
+  // TODO Add tear down to remove listener
+  return () => '';
+})
+
+
+btnClick$.subscribe(
+  {
+    next: (e) => console.log('next1', [e.type, e.clientX, e.clientY])
+  }
+);
+
+btnClick$.subscribe(
+  {
+    next: (e) => console.log('next2', [e.type, e.clientX, e.clientY])
+  }
+);
+
+setTimeout(() => {
+  btnClick$.subscribe(
+    {
+      next: (e) => console.log('next3', [e.type, e.clientX, e.clientY])
+    }
+  );
+}, 2000);
