@@ -1,35 +1,19 @@
 import { Observable } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
 
-const obser$ = new Observable<string>(sub => {
-  let count = 0;
-  console.log('new Observable')
+// https://random-data-api.com/
+const URL = 'https://random-data-api.com/api/name/random_name'
+const api$ = ajax<any>(URL);
 
-  const intervalId = setInterval(() => {
-    console.log('timer')
-    // if (count === 4) {
-    //   sub.complete();
-    // }
-    count ++
-    sub.next(`count ${count}`);
-    
 
-  },1000);
-
-  return () => { 
-  // Teardown when subscription ends
-    console.log('teardown');
-    clearInterval(intervalId);
-  }
+api$.subscribe({
+  next: (x) => console.log('next1', x.response.first_name)
 })
 
+api$.subscribe({
+  next: (x) => console.log('next2', x.response.first_name)
+})
 
-const sub = obser$.subscribe({
-  next: (x) => console.log('next', x),
-  complete: () => console.log('completed'),
-  error: (x) =>  console.log('error', x)
-});
-
-// Unsubscribe after 3 seconds
-setTimeout(() => {
-  sub.unsubscribe();
-}, 3000);
+api$.subscribe({
+  next: (x) => console.log('next3', x.response.first_name)
+})
