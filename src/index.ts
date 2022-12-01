@@ -1,4 +1,4 @@
-import { Observable, of, from } from 'rxjs';
+import { Observable, of, from, fromEvent, timer} from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 /*
   of
@@ -42,6 +42,30 @@ import { ajax } from 'rxjs/ajax';
 //   next: x => console.log('next', x),
 //   complete: () => console.log('complete')
 // })
+
+/*
+  fromEvent
+*/
+// const btn = document.querySelector('#clickBtn');
+
+// console.log(btn);
+
+// const btn$ = fromEvent<MouseEvent>(btn, 'click')
+// btn$.subscribe({
+//     next: x => console.log('next', x.type, x.y, x.x),
+//     complete: () => console.log('complete')
+//   })
+
+/*
+  timer
+*/
+
+const timer$ = timer(3000);
+timer$.subscribe({
+    next: x => console.log('next', x),
+    complete: () => console.log('complete')
+  })
+
 
 
 
