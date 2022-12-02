@@ -1,4 +1,4 @@
-import { Observable, of, from, fromEvent, timer} from 'rxjs';
+import { Observable, of, from, fromEvent, timer, interval, take} from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 /*
   of
@@ -60,8 +60,19 @@ import { ajax } from 'rxjs/ajax';
   timer
 */
 
-const timer$ = timer(3000);
-timer$.subscribe({
+// const timer$ = timer(3000);
+// timer$.subscribe({
+//     next: x => console.log('next', x),
+//     complete: () => console.log('complete')
+//   })
+
+
+/*
+  interval
+*/
+
+const interval$ = interval(1000);
+interval$.pipe(take(5)).subscribe({
     next: x => console.log('next', x),
     complete: () => console.log('complete')
   })
