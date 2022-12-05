@@ -1,4 +1,4 @@
-import { Observable, of, from, fromEvent, timer, interval, take, map, forkJoin, combineLatest, ConnectableObservable} from 'rxjs';
+import { Observable, of, from, fromEvent, timer, interval, take, map, forkJoin, combineLatest, ConnectableObservable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 
 // const obs1$ = timer(10000).pipe(map( () => 'obs1'));
@@ -15,34 +15,6 @@ import { ajax } from 'rxjs/ajax';
 //   complete: () => console.log('complete'),
 //   error: (s) => console.log('error', s)
 // })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
   combineLatest
@@ -68,3 +40,4 @@ timer(7000).subscribe(  {
   complete: () => console.log('timer complete: ' ),
   error: (x) => console.log('timer error: ', x),
 })
+
